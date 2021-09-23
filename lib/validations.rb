@@ -10,7 +10,7 @@ module Validations
 
   def only_opening?(opening, closing)
     return false if opening.nil?
-    return false unless (!opening.nil? && closing.nil?)
+    return false unless closing.nil?
 
     log_imbalanced('unclosed', opening)
     true
@@ -18,7 +18,7 @@ module Validations
 
   def only_closing?(opening, closing)
     return false if closing.nil?
-    return false unless (!closing.nil? && opening.nil?)
+    return false unless opening.nil?
 
     log_imbalanced('unopened', closing)
     true
