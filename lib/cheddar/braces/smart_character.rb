@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# A wrapper around a character that provides methods for balancing algorithm
 class SmartCharacter
   SPECIALS = {
     '(' => ')',

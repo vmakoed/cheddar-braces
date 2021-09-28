@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require './lib/cli'
+$LOAD_PATH.unshift("#{__dir__}/../lib")
 
-CLI.run
+require 'cheddar/braces'
+
+Cheddar::Braces::CLI.run

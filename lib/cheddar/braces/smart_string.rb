@@ -1,32 +1,33 @@
 # frozen_string_literal: true
 
-require_relative './smart_character'
-require_relative './validations'
+require_relative 'validations'
 
+# A wrapper around a String that allows checking whether a string is balanced
 class SmartString
   include Validations
 
-  attr_reader :source
+  attr_reader :source, :error
 
   def initialize(source)
     @source = source
+    @error = nil
   end
 
-  def check_balance
+  def balanced?
     opening = find_opening
     closing = find_closing
 
-    return if no_specials?(opening, closing)
-    return if only_opening?(opening, closing)
-    return if only_closing?(opening, closing)
-    return if closing_before_opening?(opening, closing)
+    return true if no_specials?(opening, closing)
+    return false if only_opening?(opening, closing)
+    return false if only_closing?(opening, closing)
+    return false if closing_before_opening?(opening, closing)
 
     reverse_closing = find_reverse_closing
 
-    return if opening_does_not_match_reverse_closing?(opening, reverse_closing)
+    return false if opening_does_not_match_reverse_closing?(opening, reverse_closing)
 
     empty!(opening, reverse_closing)
-    check_balance
+    balanced?
   end
 
   private
@@ -52,7 +53,7 @@ class SmartString
   end
 
   def characters
-    @characters ||= source.split('').map.with_index do |character, index|
+    @characters ||= source.chars.map.with_index do |character, index|
       SmartCharacter.new(character, index)
     end
   end
